@@ -1,0 +1,18 @@
+{
+  "name": "backend-donates",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/m4zeboy/backend-donates.git",
+  "author": "Moisés Silva de Azevedo <moises775azevedo@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "type": "module",
+  "devDependencies": {
+    "nodemon": "^2.0.9"
+  }
+}
