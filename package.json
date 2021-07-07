@@ -5,13 +5,16 @@
   "repository": "https://github.com/m4zeboy/backend-donates.git",
   "author": "Moisés Silva de Azevedo <moises775azevedo@gmail.com>",
   "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "dev": "nodemon index.js"
   },
   "dependencies": {
     "express": "^4.17.1"
   },
-  "type": "module",
   "devDependencies": {
     "nodemon": "^2.0.9"
   }
