@@ -5,7 +5,7 @@ export function up(knex) {
         table.text('address').notNullable()
         table.text('responsible').notNullable()
         table.integer('quantity').notNullable()
-        table.string('date').notNullable()
+        table.text('date').notNullable()
     })
   };
   

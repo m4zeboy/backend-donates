@@ -16,6 +16,7 @@ server.post('/api/donates', async (req, res) => {
     const donate = await Donates.addDonate(donateInfo);
     try {
         return res.status(201).json({ message: 'Donate succesfully created', donate_id: donate[0].id })
+        // return res.status(201).json({ message: 'Donate succesfully created'})
     } catch (error) {
         console.log(error)
         return res.status(500).json({ message: 'Unable to add donate'})
@@ -25,6 +26,16 @@ server.post('/api/donates', async (req, res) => {
 
 server.get('/api/donates', async (req,res) => {
     const records = await Donates.listDonates();
+    try {
+        return res.status(200).json(records)
+    } catch (error) {
+        return res.status(500).json({ message: `Error on retrievind donates: ${error.message}`})
+    }
+})
+
+server.get('/api/donates/:month', async (req,res) => {
+    const { month } = req.params;
+    const records = await Donates.listDonatesByMonth(month)
     try {
         return res.status(200).json(records)
     } catch (error) {
