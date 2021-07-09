@@ -6,6 +6,7 @@ export function up(knex) {
         table.text('responsible').notNullable()
         table.integer('quantity').notNullable()
         table.text('date').notNullable()
+        table.timestamps(true,true)
     })
   };
   
