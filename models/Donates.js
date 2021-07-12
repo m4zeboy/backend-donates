@@ -3,6 +3,7 @@ import db from '../db/index.js';
 export default {
     addDonate,
     listDonates,
+    findById,
     listDonatesByMonth,
     updateDonate,
     deleteDonate
@@ -32,7 +33,7 @@ async function listDonatesByMonth(month) {
 }
 
 async function findById(id) {
-    return await db('donates').where({ id })
+    return await db('donates').where({ id }).first()
 }
 
 async function updateDonate(id,changes) {
@@ -42,7 +43,10 @@ async function updateDonate(id,changes) {
         .then(() => {
             return findById(id)
         })
-
+        .catch((error) => {
+            return error
+        })
+    
 }
 
 async function deleteDonate(id) {
