@@ -67,7 +67,7 @@ async function change(req, res) {
 }
 
 async function remove(req, res) {
-    const { id } = req.body;
+    const { id } = req.params;
     const donateFound = await Donates.findById(id);
     if (donateFound) {
         const deleted = await Donates.deleteDonate(id);

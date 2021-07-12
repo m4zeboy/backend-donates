@@ -1,5 +1,7 @@
 import db from '../db/index.js';
 
+// Agir diretamente no banco de dados.
+
 export default {
     addDonate,
     listDonates,

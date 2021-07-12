@@ -1,5 +1,8 @@
+import dotenv from 'dotenv';
 import server from "./api/server.js"
-const port = 3333
+
+dotenv.config();
+const port = process.env.PORT;
 
 server.listen(port)
 console.log(`\n***  Server running in port ${port} ***\n`)
