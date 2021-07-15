@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import Members from '../models/Members.js';
+import generateToken from './generateToken.js';
 const router = Router();
 
 // register
@@ -41,7 +42,8 @@ router.post('/login', async (req, res) => {
         console.log(member)
         
         if(member && bcrypt.compareSync(password, member.password)) {
-            return res.status(200).json({message: `Welcome, ${member.name}.`})
+            const token = generateToken(member)
+            return res.status(200).json({message: `Welcome, ${member.name}.`, token})
         } else {
             return res.status(401).json({message:'Invalid Credentials'})
         }
