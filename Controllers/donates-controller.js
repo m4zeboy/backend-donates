@@ -1,11 +1,14 @@
 import Donates from '../models/Donates.js';
+import pdf from 'html-pdf';
+import utils from '../utils.js';
 
 export default {
     add,
     index,
     indexByMonth,
     change,
-    remove
+    remove,
+    createPDF
 }
 
 async function add(req, res) {
@@ -79,4 +82,69 @@ async function remove(req, res) {
     } else {
         return res.status(404).json({ message: 'Donate does not exist.' })
     }
+}
+
+async function createPDF(req, res) {
+    const { month } = req.params;
+    const donates = await Donates.listDonatesByMonth(month);
+    
+    
+    const table = utils.renderTable(donates);
+    
+    const formatedMonth = utils.getMonth(Number(month[1]))
+
+    const totalDonates = donates.reduce((count, actual) => {
+        return count + actual.quantity;
+    }, 0)
+
+    const html = `
+    <html lang="pt-br">
+    <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <title>Relação cestas - ${formatedMonth}</title>
+        <style>
+            * {
+                font-family: 'Roboto', sans-serif;
+            }
+
+            table {
+                width: 100%;
+            }
+
+            th {
+                background-color: #fbfbfb;
+            }
+            table, th, td {
+                padding: 4px;
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+
+            h1 {
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Relação das doações de cestas básicas de ${formatedMonth}</h1>
+        <hr>
+        <p><strong>Total de cestas:</strong> ${totalDonates} ${totalDonates > 1? 'Cestas doadas.': 'Cesta doada.'}</p>
+        ${table}
+    </body>
+    </html>
+    `
+    const fileName = `${new Date().getTime()}.pdf`
+    const filePdf = pdf.create(html).toFile(`./pdf/${fileName}`, (err, response) =>{
+        if (err) return console.log(err)
+        console.log(response)
+        // return res.status(200).sendFile(response.filename)
+    })
+    return res.status(200).send(html)
 }

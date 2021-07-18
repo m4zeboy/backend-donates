@@ -32,9 +32,9 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
     const credentials = req.body;
     const { name, password } = credentials;
-
+    
     if (!(name && password)) {
-        return res.status(401).json({message: 'Name and password are required'})
+        return res.status(400).json({message: 'Name and password are required'})
     }
 
     const member = await Members.findByMembername(name)
@@ -45,9 +45,10 @@ router.post('/login', async (req, res) => {
             const token = generateToken(member)
             return res.status(200).json({message: `Welcome, ${member.name}.`, token})
         } else {
-            return res.status(401).json({message:'Invalid Credentials'})
+            return res.status(400).json({message:'Invalid Credentials'})
         }
     } catch (error) {
+        // console.log(error)
         return res.status(500).json({message: error.message})
 
     }
