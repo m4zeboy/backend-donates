@@ -43,6 +43,7 @@ router.post('/login', async (req, res) => {
         
         if(member && bcrypt.compareSync(password, member.password)) {
             const token = generateToken(member)
+            console.log(res.header)
             return res.status(200).json({message: `Welcome, ${member.name}.`, token})
         } else {
             return res.status(400).json({message:'Invalid Credentials'})
