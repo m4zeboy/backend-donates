@@ -21,4 +21,10 @@ server.get('/', function (pedido, resposta) {
     return resposta.send('Testando')
 })
 
+// server.get('/pdfs/:filename', async(req,res) => {
+//     const { filename } = req.params;
+//     const splitedFileName = filename.split('//')
+//     return res.sendFile(filename)
+// })
+
 export default server;
