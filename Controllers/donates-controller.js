@@ -143,8 +143,11 @@ async function createPDF(req, res) {
     const fileName = `${new Date().getTime()}.pdf`
     const filePdf = pdf.create(html).toFile(`./pdf/${fileName}`, (err, response) =>{
         if (err) return console.log(err)
-        console.log(response)
-        return res.status(200).json({ url: response.filename })
+        else {
+            const [app, pdf, file] = response.filename.split('/')
+            // console.log(app, pdf, file)
+            return res.status(200).download('/app/pdf', file);
+        }
     })
     // return res.status(200).send(html)
 }
